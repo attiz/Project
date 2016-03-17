@@ -9,9 +9,12 @@ namespace Szerver
     {
         public static void Register(HttpConfiguration config)
         {
+            //Removing XML format from web api
+            config.Formatters.Remove(config.Formatters.XmlFormatter);
+
             config.Routes.MapHttpRoute(
                 name: "DefaultApi",
-                routeTemplate: "api/{controller}/{id}",
+                routeTemplate: "{controller}/{id}",
                 defaults: new { id = RouteParameter.Optional }
             );
 
