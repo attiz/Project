@@ -12,7 +12,7 @@ namespace Szerver.Controllers
         // GET api/values asd
         public IEnumerable<string> Get()
         {
-            return new string[] { "value1", "value2" };
+            return new string[] { "value1" };
         }
 
         // GET api/values/5
