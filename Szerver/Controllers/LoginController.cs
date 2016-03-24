@@ -37,7 +37,7 @@ namespace Szerver.Controllers
         public HttpResponseMessage Post([FromBody]JObject value)
         {
 
-            return Request.CreateResponse(HttpStatusCode.NotImplemented, "Johet objektum is");
+            return Request.CreateResponse(HttpStatusCode.NotImplemented, value);
         }
 
         /// <summary>
@@ -45,16 +45,16 @@ namespace Szerver.Controllers
         /// </summary>
         /// <param name="value">ADMIN parameterek, JSON objektumban, body-bol</param>
         /// <returns></returns>
-        public HttpResponseMessage Put([FromBody]string value)
+        public HttpResponseMessage Put([FromBody]JObject value)
         {
-
+            //a valuebol ki kell szedni, hogy torolni akar, vagy hozzaadni
             return Request.CreateResponse(HttpStatusCode.PartialContent, "Barmi");
         }
-
         
-        public HttpResponseMessage Delete([FromBody]JObject value)
+
+        public HttpResponseMessage Delete(int id)
         {
-            return Request.CreateResponse(HttpStatusCode.NotImplemented);
+            return Request.CreateResponse(HttpStatusCode.Unauthorized);
         }
     }
 }
