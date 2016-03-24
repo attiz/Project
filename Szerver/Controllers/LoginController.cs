@@ -14,7 +14,7 @@ namespace Szerver.Controllers
         {
 
 
-            return Request.CreateResponse(HttpStatusCode.OK, "Visszateritett valamit");
+            return Request.CreateResponse(HttpStatusCode.OK, "Visszateritett valamittttttt");
         }
 
         // GET login/5
