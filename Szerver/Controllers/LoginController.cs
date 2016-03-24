@@ -4,6 +4,8 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 namespace Szerver.Controllers
 {
@@ -17,28 +19,40 @@ namespace Szerver.Controllers
             return Request.CreateResponse(HttpStatusCode.OK, "Visszateritett valamit");
         }
 
-        // GET login/5
-        public HttpResponseMessage Get(int id)
+        /// <summary>
+        /// Status Kod-ot terit vissza ha a neptun kodot nem talalta meg az adatbazisban
+        /// </summary>
+        /// <param name="id">Neptun Kod</param>
+        /// <returns></returns>
+        public HttpResponseMessage Get(string id)
         {
             return Request.CreateResponse(HttpStatusCode.Accepted, "uzenet");
         }
 
-        // POST login
-        public HttpResponseMessage Post([FromBody]string value)
+        /// <summary>
+        /// Login check a tanaroknak es adminoknak, a Body-bol kell jojjon
+        /// </summary>
+        /// <param name="value">JSON objektum</param>
+        /// <returns>Status Kod-ot terit vissza</returns>
+        public HttpResponseMessage Post([FromBody]JObject value)
         {
 
             return Request.CreateResponse(HttpStatusCode.NotImplemented, "Johet objektum is");
         }
 
-        // PUT login/5
-        public HttpResponseMessage Put(int id, [FromBody]string value)
+        /// <summary>
+        /// Uj tanarok hozzaadasa, JSON objektumban at kell kuldeni az admin kodot
+        /// </summary>
+        /// <param name="value">ADMIN parameterek, JSON objektumban, body-bol</param>
+        /// <returns></returns>
+        public HttpResponseMessage Put([FromBody]string value)
         {
 
             return Request.CreateResponse(HttpStatusCode.PartialContent, "Barmi");
         }
 
-        // DELETE login/5
-        public HttpResponseMessage Delete(int id)
+        
+        public HttpResponseMessage Delete([FromBody]JObject value)
         {
             return Request.CreateResponse(HttpStatusCode.NotImplemented);
         }
