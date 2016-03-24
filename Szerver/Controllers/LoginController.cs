@@ -6,6 +6,7 @@ using System.Net.Http;
 using System.Web.Http;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using Szerver.App_Start;
 
 namespace Szerver.Controllers
 {
@@ -24,8 +25,10 @@ namespace Szerver.Controllers
         /// </summary>
         /// <param name="id">Neptun Kod</param>
         /// <returns></returns>
+        [AllowCors]
         public HttpResponseMessage Get(string id)
         {
+            //diak lekerdezese adatbazisbol
             return Request.CreateResponse(HttpStatusCode.Accepted, "uzenet");
         }
 
