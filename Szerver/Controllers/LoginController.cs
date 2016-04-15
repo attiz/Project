@@ -7,6 +7,9 @@ using System.Web.Http;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Szerver.App_Start;
+using Szerver.Models;
+using Oracle.DataAccess.Client;
+using Oracle.DataAccess.Types;
 
 namespace Szerver.Controllers
 {
@@ -15,9 +18,33 @@ namespace Szerver.Controllers
         // GET login
         public HttpResponseMessage Get()
         {
+            try
+            {
+                string oradb = "Data Source = localhost:1521/xe;User Id =" + Constants.USERID +
+                    "; Password = " + Constants.PASSWORD+ ";";
 
+                OracleConnection conn = new OracleConnection(oradb);
 
-            return Request.CreateResponse(HttpStatusCode.OK, "Visszateritett valamittttttt");
+                conn.Open();
+
+                OracleCommand cmd = new OracleCommand();
+
+                cmd.Connection = conn;
+
+                cmd.CommandText = "select count(*) from sys.tanszek";
+                cmd.CommandType = System.Data.CommandType.Text;
+
+                OracleDataReader dr = cmd.ExecuteReader();
+
+                dr.Read();
+
+                return Request.CreateResponse(HttpStatusCode.OK, dr.GetValue(0).ToString());
+            }
+            catch (Exception e)
+            {
+                return Request.CreateResponse(HttpStatusCode.Unused, e.Message);
+            }
+
         }
 
         /// <summary>
