@@ -20,25 +20,11 @@ namespace Szerver.Controllers
         {
             try
             {
-                string oradb = "Data Source = localhost:1521/xe;User Id =" + Constants.USERID +
-                    "; Password = " + Constants.PASSWORD+ ";";
+                Login login = new Login();
 
-                OracleConnection conn = new OracleConnection(oradb);
+                string val = login.RunCommand("select * from tanszek");
 
-                conn.Open();
-
-                OracleCommand cmd = new OracleCommand();
-
-                cmd.Connection = conn;
-
-                cmd.CommandText = "select count(*) from tanszek";
-                cmd.CommandType = System.Data.CommandType.Text;
-
-                OracleDataReader dr = cmd.ExecuteReader();
-
-                dr.Read();
-
-                return Request.CreateResponse(HttpStatusCode.OK, dr.GetValue(0).ToString());
+                return Request.CreateResponse(HttpStatusCode.OK, val);
             }
             catch (Exception e)
             {
