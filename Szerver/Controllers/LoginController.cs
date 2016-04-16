@@ -31,7 +31,7 @@ namespace Szerver.Controllers
 
                 cmd.Connection = conn;
 
-                cmd.CommandText = "select count(*) from sys.tanszek";
+                cmd.CommandText = "select count(*) from tanszek";
                 cmd.CommandType = System.Data.CommandType.Text;
 
                 OracleDataReader dr = cmd.ExecuteReader();
