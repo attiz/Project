@@ -9,5 +9,7 @@ namespace Szerver.Models
     {
         public static string USERID = "system";
         public static string PASSWORD = "jormungand";
+        public static string CONNECTIONDETAILS = "Data Source = localhost:1521/xe;User Id =" + Constants.USERID +
+                    "; Password = " + Constants.PASSWORD+ ";";
     }
 }
