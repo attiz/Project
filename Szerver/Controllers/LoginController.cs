@@ -18,23 +18,24 @@ namespace Szerver.Controllers
         // GET login
         public HttpResponseMessage Get()
         {
-            try
-            {
-                Login login = new Login();
+            return Request.CreateResponse(HttpStatusCode.NotImplemented);
+            //try
+            //{
+            //    Login login = new Login();
 
-                string val = login.RunCommand("select * from tanszek");
+            //    string val = login.RunCommand("select * from tanszek");
 
-                return Request.CreateResponse(HttpStatusCode.OK, val);
-            }
-            catch (Exception e)
-            {
-                return Request.CreateResponse(HttpStatusCode.Unused, e.Message);
-            }
+            //    return Request.CreateResponse(HttpStatusCode.OK, val);
+            //}
+            //catch (Exception e)
+            //{
+            //    return Request.CreateResponse(HttpStatusCode.Unused, e.Message);
+            //}
 
         }
 
         /// <summary>
-        /// Status Kod-ot terit vissza ha a neptun kodot nem talalta meg az adatbazisban
+        /// Notimplemented
         /// </summary>
         /// <param name="id">Neptun Kod</param>
         /// <returns></returns>
@@ -42,7 +43,7 @@ namespace Szerver.Controllers
         public HttpResponseMessage Get(string id)
         {
             //diak lekerdezese adatbazisbol
-            return Request.CreateResponse(HttpStatusCode.Accepted, "uzenet");
+            return Request.CreateResponse(HttpStatusCode.NotImplemented);
         }
 
         /// <summary>
@@ -52,9 +53,35 @@ namespace Szerver.Controllers
         /// <returns>Status Kod-ot terit vissza</returns>
         public HttpResponseMessage Post([FromBody]JObject value)
         {
+            string neptun_kod = (string)value["neptun_kod"] ?? "";
 
-            return Request.CreateResponse(HttpStatusCode.NotImplemented, value);
+            if (!string.IsNullOrEmpty(neptun_kod))
+            {
+                Login login = new Login();
+                //fuggvenyhivas, kerdoiv lekerese
+                string sql = "";
+                string response = login.RunCommand(sql);
+                //ide jon a diaknak azonositasa, kerdesek
+                return Request.CreateResponse(HttpStatusCode.OK, response);
+            }
+
+            string user = (string)value["tanar_nev"] ?? "";
+
+
+            try
+            {
+                Login login = new Login();
+                //fuggvenyhivas, jog visszateritese
+                string sql = "";
+                string data = login.RunCommand(sql);
+                return Request.CreateResponse(HttpStatusCode.OK, data);
+            }
+            catch (Exception e)
+            {
+                return Request.CreateResponse(HttpStatusCode.InternalServerError, e.Message);
+            }
         }
+
 
         /// <summary>
         /// Uj tanarok hozzaadasa, JSON objektumban at kell kuldeni az admin kodot
@@ -63,7 +90,7 @@ namespace Szerver.Controllers
         /// <returns></returns>
         public HttpResponseMessage Put([FromBody]JObject value)
         {
-            //a valuebol ki kell szedni, hogy torolni akar, vagy hozzaadni
+            //a diakok importalasa, bemeno adat json objektum
             return Request.CreateResponse(HttpStatusCode.PartialContent, "Barmi");
         }
         
