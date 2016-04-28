@@ -24,6 +24,7 @@ namespace Szerver.Controllers
 
                 string val = login.RunCommand("select * from tanszek");
 
+                
                 return Request.CreateResponse(HttpStatusCode.OK, val);
             }
             catch (Exception e)
