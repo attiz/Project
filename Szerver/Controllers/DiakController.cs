@@ -12,6 +12,7 @@ namespace Szerver.Controllers
         // GET api/diak
         public void Get()
         {
+            
         }
 
         // GET api/diak/5
@@ -22,6 +23,7 @@ namespace Szerver.Controllers
         // POST api/diak
         public void Post([FromBody]string value)
         {
+
         }
 
         // PUT api/diak/5

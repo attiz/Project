@@ -1,0 +1,793 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="Model.Store" Provider="Oracle.ManagedDataAccess.Client" ProviderManifestToken="11.2" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="DIAK">
+          <Key>
+            <PropertyRef Name="D_ID" />
+          </Key>
+          <Property Name="D_ID" Type="varchar2" MaxLength="6" Nullable="false" />
+          <Property Name="D_EVFOLYAM" Type="varchar2" MaxLength="2" />
+        </EntityType>
+        <EntityType Name="DIAK_TANTARGY">
+          <Key>
+            <PropertyRef Name="D_ID" />
+            <PropertyRef Name="T_ID" />
+          </Key>
+          <Property Name="D_ID" Type="varchar2" MaxLength="6" Nullable="false" />
+          <Property Name="T_ID" Type="number" Precision="4" Scale="0" Nullable="false" />
+        </EntityType>
+        <EntityType Name="DIAK_TANUL">
+          <Key>
+            <PropertyRef Name="D_ID" />
+            <PropertyRef Name="SZ_ID" />
+          </Key>
+          <Property Name="D_ID" Type="varchar2" MaxLength="6" Nullable="false" />
+          <Property Name="SZ_ID" Type="varchar2" MaxLength="6" Nullable="false" />
+        </EntityType>
+        <EntityType Name="JOG">
+          <Key>
+            <PropertyRef Name="J_ID" />
+          </Key>
+          <Property Name="J_ID" Type="number" Precision="2" Scale="0" Nullable="false" />
+          <Property Name="J_NEV" Type="varchar2" MaxLength="20" />
+        </EntityType>
+        <EntityType Name="KERDES">
+          <Key>
+            <PropertyRef Name="K_ID" />
+          </Key>
+          <Property Name="K_ID" Type="number" Precision="6" Scale="0" Nullable="false" />
+          <Property Name="KERDES" Type="varchar2" MaxLength="500" />
+        </EntityType>
+        <EntityType Name="KERDES_VALASZOK">
+          <Key>
+            <PropertyRef Name="V_ID" />
+            <PropertyRef Name="K_ID" />
+          </Key>
+          <Property Name="V_ID" Type="number" Precision="3" Scale="0" Nullable="false" />
+          <Property Name="K_ID" Type="number" Precision="6" Scale="0" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6013: The table/view 'OSZTOTT.KOLCSONZES' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
+        <EntityType Name="KOLCSONZES">
+          <Property Name="AZON" Type="number" Precision="4" Scale="0" />
+          <Property Name="KOLCS_SPEC" Type="xmltype" />
+        </EntityType>-->
+        <EntityType Name="SZAK">
+          <Key>
+            <PropertyRef Name="SZAK_ID" />
+          </Key>
+          <Property Name="SZAK_ID" Type="varchar2" MaxLength="10" Nullable="false" />
+          <Property Name="SZAKNEV" Type="varchar2" MaxLength="50" />
+          <Property Name="TSZ_ID" Type="number" Precision="2" Scale="0" />
+        </EntityType>
+        <EntityType Name="SZAK_TANTARGYAK">
+          <Key>
+            <PropertyRef Name="SZ_ID" />
+            <PropertyRef Name="T_ID" />
+          </Key>
+          <Property Name="SZ_ID" Type="varchar2" MaxLength="6" Nullable="false" />
+          <Property Name="T_ID" Type="number" Precision="4" Scale="0" Nullable="false" />
+          <Property Name="EVFOLYAM" Type="number" Precision="1" Scale="0" />
+        </EntityType>
+        <EntityType Name="TANAR_ADMIN">
+          <Key>
+            <PropertyRef Name="TA_ID" />
+          </Key>
+          <Property Name="TA_ID" Type="number" Precision="4" Scale="0" Nullable="false" />
+          <Property Name="TA_NEV" Type="varchar2" MaxLength="300" />
+          <Property Name="TSZ_ID" Type="number" Precision="2" Scale="0" />
+          <Property Name="J_ID" Type="number" Precision="2" Scale="0" />
+        </EntityType>
+        <EntityType Name="TANAR_TANTARGY">
+          <Key>
+            <PropertyRef Name="TA_ID" />
+            <PropertyRef Name="T_ID" />
+            <PropertyRef Name="K_ID" />
+          </Key>
+          <Property Name="TA_ID" Type="number" Precision="4" Scale="0" Nullable="false" />
+          <Property Name="T_ID" Type="number" Precision="4" Scale="0" Nullable="false" />
+          <Property Name="K_ID" Type="number" Precision="6" Scale="0" Nullable="false" />
+          <Property Name="OSSZEG" Type="number" Precision="6" Scale="0" />
+          <Property Name="VALASZOK_SZAMA" Type="number" Precision="6" Scale="0" />
+        </EntityType>
+        <EntityType Name="TANSZEK">
+          <Key>
+            <PropertyRef Name="TSZ_ID" />
+          </Key>
+          <Property Name="TSZ_ID" Type="number" Precision="2" Scale="0" Nullable="false" />
+          <Property Name="TSZ_NEV" Type="varchar2" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="TANTARGY">
+          <Key>
+            <PropertyRef Name="T_ID" />
+          </Key>
+          <Property Name="T_ID" Type="number" Precision="4" Scale="0" Nullable="false" />
+          <Property Name="T_NEV" Type="varchar2" MaxLength="250" />
+        </EntityType>
+        <EntityType Name="VALASZOK">
+          <Key>
+            <PropertyRef Name="V_ID" />
+          </Key>
+          <Property Name="V_ID" Type="number" Precision="3" Scale="0" Nullable="false" />
+          <Property Name="VALASZ" Type="varchar2" MaxLength="100" />
+          <Property Name="ERTEK" Type="number" Precision="2" Scale="0" />
+        </EntityType>
+        <Association Name="DT_D_FK">
+          <End Role="DIAK" Type="Self.DIAK" Multiplicity="1" />
+          <End Role="DIAK_TANTARGY" Type="Self.DIAK_TANTARGY" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DIAK">
+              <PropertyRef Name="D_ID" />
+            </Principal>
+            <Dependent Role="DIAK_TANTARGY">
+              <PropertyRef Name="D_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="DT_T_FK">
+          <End Role="TANTARGY" Type="Self.TANTARGY" Multiplicity="1" />
+          <End Role="DIAK_TANTARGY" Type="Self.DIAK_TANTARGY" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TANTARGY">
+              <PropertyRef Name="T_ID" />
+            </Principal>
+            <Dependent Role="DIAK_TANTARGY">
+              <PropertyRef Name="T_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="DTD_FK">
+          <End Role="DIAK" Type="Self.DIAK" Multiplicity="1" />
+          <End Role="DIAK_TANUL" Type="Self.DIAK_TANUL" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DIAK">
+              <PropertyRef Name="D_ID" />
+            </Principal>
+            <Dependent Role="DIAK_TANUL">
+              <PropertyRef Name="D_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="DTSZ_FK">
+          <End Role="SZAK" Type="Self.SZAK" Multiplicity="1" />
+          <End Role="DIAK_TANUL" Type="Self.DIAK_TANUL" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SZAK">
+              <PropertyRef Name="SZAK_ID" />
+            </Principal>
+            <Dependent Role="DIAK_TANUL">
+              <PropertyRef Name="SZ_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="KV_K_FK">
+          <End Role="KERDES" Type="Self.KERDES" Multiplicity="1" />
+          <End Role="KERDES_VALASZOK" Type="Self.KERDES_VALASZOK" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="KERDES">
+              <PropertyRef Name="K_ID" />
+            </Principal>
+            <Dependent Role="KERDES_VALASZOK">
+              <PropertyRef Name="K_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="KV_V_FK">
+          <End Role="VALASZOK" Type="Self.VALASZOK" Multiplicity="1" />
+          <End Role="KERDES_VALASZOK" Type="Self.KERDES_VALASZOK" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="VALASZOK">
+              <PropertyRef Name="V_ID" />
+            </Principal>
+            <Dependent Role="KERDES_VALASZOK">
+              <PropertyRef Name="V_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="SZTSZ_FK">
+          <End Role="SZAK" Type="Self.SZAK" Multiplicity="1" />
+          <End Role="SZAK_TANTARGYAK" Type="Self.SZAK_TANTARGYAK" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SZAK">
+              <PropertyRef Name="SZAK_ID" />
+            </Principal>
+            <Dependent Role="SZAK_TANTARGYAK">
+              <PropertyRef Name="SZ_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="SZTT_FK">
+          <End Role="TANTARGY" Type="Self.TANTARGY" Multiplicity="1" />
+          <End Role="SZAK_TANTARGYAK" Type="Self.SZAK_TANTARGYAK" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TANTARGY">
+              <PropertyRef Name="T_ID" />
+            </Principal>
+            <Dependent Role="SZAK_TANTARGYAK">
+              <PropertyRef Name="T_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="TA_TSZ_FK">
+          <End Role="TANSZEK" Type="Self.TANSZEK" Multiplicity="0..1" />
+          <End Role="TANAR_ADMIN" Type="Self.TANAR_ADMIN" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TANSZEK">
+              <PropertyRef Name="TSZ_ID" />
+            </Principal>
+            <Dependent Role="TANAR_ADMIN">
+              <PropertyRef Name="TSZ_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="TAJ_FK">
+          <End Role="JOG" Type="Self.JOG" Multiplicity="0..1" />
+          <End Role="TANAR_ADMIN" Type="Self.TANAR_ADMIN" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="JOG">
+              <PropertyRef Name="J_ID" />
+            </Principal>
+            <Dependent Role="TANAR_ADMIN">
+              <PropertyRef Name="J_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="TANSZEK_FK">
+          <End Role="TANSZEK" Type="Self.TANSZEK" Multiplicity="0..1" />
+          <End Role="SZAK" Type="Self.SZAK" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TANSZEK">
+              <PropertyRef Name="TSZ_ID" />
+            </Principal>
+            <Dependent Role="SZAK">
+              <PropertyRef Name="TSZ_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="TT_K_ID">
+          <End Role="KERDES" Type="Self.KERDES" Multiplicity="1" />
+          <End Role="TANAR_TANTARGY" Type="Self.TANAR_TANTARGY" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="KERDES">
+              <PropertyRef Name="K_ID" />
+            </Principal>
+            <Dependent Role="TANAR_TANTARGY">
+              <PropertyRef Name="K_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="TT_T_FK">
+          <End Role="TANTARGY" Type="Self.TANTARGY" Multiplicity="1" />
+          <End Role="TANAR_TANTARGY" Type="Self.TANAR_TANTARGY" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TANTARGY">
+              <PropertyRef Name="T_ID" />
+            </Principal>
+            <Dependent Role="TANAR_TANTARGY">
+              <PropertyRef Name="T_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="TT_TA_FK">
+          <End Role="TANAR_ADMIN" Type="Self.TANAR_ADMIN" Multiplicity="1" />
+          <End Role="TANAR_TANTARGY" Type="Self.TANAR_TANTARGY" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TANAR_ADMIN">
+              <PropertyRef Name="TA_ID" />
+            </Principal>
+            <Dependent Role="TANAR_TANTARGY">
+              <PropertyRef Name="TA_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Function Name="DIAK_KERDOIV" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="OSZTOTT" ReturnType="clob">
+          <Parameter Name="NEPTUN_KOD" Type="varchar2" Mode="In" />
+        </Function>
+        <Function Name="GETDIAKSZAK" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="OSZTOTT" ReturnType="varchar2">
+          <Parameter Name="NEPTUN_KOD" Type="varchar2" Mode="In" />
+          <Parameter Name="EVFOLYAM" Type="varchar2" Mode="Out" />
+        </Function>
+        <Function Name="GETDIAKTANARAI" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="OSZTOTT" ReturnType="clob">
+          <Parameter Name="NEPTUN_KOD" Type="varchar2" Mode="In" />
+        </Function>
+        <Function Name="GETKERDESEK" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="OSZTOTT" ReturnType="clob" />
+        <Function Name="GETSZAKTANTARGYAK_KURZOR" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="OSZTOTT">
+          <Parameter Name="SZAK_ID" Type="varchar2" Mode="In" />
+        </Function>
+        <Function Name="GETTANARJOG" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="OSZTOTT" ReturnType="varchar2">
+          <Parameter Name="TANAR_NEV" Type="varchar2" Mode="In" />
+        </Function>
+        <Function Name="GETVALASZOK" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="OSZTOTT" ReturnType="clob" />
+        <EntityContainer Name="ModelStoreContainer">
+          <EntitySet Name="DIAK" EntityType="Self.DIAK" Schema="OSZTOTT" store:Type="Tables" />
+          <EntitySet Name="DIAK_TANTARGY" EntityType="Self.DIAK_TANTARGY" Schema="OSZTOTT" store:Type="Tables" />
+          <EntitySet Name="DIAK_TANUL" EntityType="Self.DIAK_TANUL" Schema="OSZTOTT" store:Type="Tables" />
+          <EntitySet Name="JOG" EntityType="Self.JOG" Schema="OSZTOTT" store:Type="Tables" />
+          <EntitySet Name="KERDES" EntityType="Self.KERDES" Schema="OSZTOTT" store:Type="Tables" />
+          <EntitySet Name="KERDES_VALASZOK" EntityType="Self.KERDES_VALASZOK" Schema="OSZTOTT" store:Type="Tables" />
+          <EntitySet Name="SZAK" EntityType="Self.SZAK" Schema="OSZTOTT" store:Type="Tables" />
+          <EntitySet Name="SZAK_TANTARGYAK" EntityType="Self.SZAK_TANTARGYAK" Schema="OSZTOTT" store:Type="Tables" />
+          <EntitySet Name="TANAR_ADMIN" EntityType="Self.TANAR_ADMIN" Schema="OSZTOTT" store:Type="Tables" />
+          <EntitySet Name="TANAR_TANTARGY" EntityType="Self.TANAR_TANTARGY" Schema="OSZTOTT" store:Type="Tables" />
+          <EntitySet Name="TANSZEK" EntityType="Self.TANSZEK" Schema="OSZTOTT" store:Type="Tables" />
+          <EntitySet Name="TANTARGY" EntityType="Self.TANTARGY" Schema="OSZTOTT" store:Type="Tables" />
+          <EntitySet Name="VALASZOK" EntityType="Self.VALASZOK" Schema="OSZTOTT" store:Type="Tables" />
+          <AssociationSet Name="DT_D_FK" Association="Self.DT_D_FK">
+            <End Role="DIAK" EntitySet="DIAK" />
+            <End Role="DIAK_TANTARGY" EntitySet="DIAK_TANTARGY" />
+          </AssociationSet>
+          <AssociationSet Name="DT_T_FK" Association="Self.DT_T_FK">
+            <End Role="TANTARGY" EntitySet="TANTARGY" />
+            <End Role="DIAK_TANTARGY" EntitySet="DIAK_TANTARGY" />
+          </AssociationSet>
+          <AssociationSet Name="DTD_FK" Association="Self.DTD_FK">
+            <End Role="DIAK" EntitySet="DIAK" />
+            <End Role="DIAK_TANUL" EntitySet="DIAK_TANUL" />
+          </AssociationSet>
+          <AssociationSet Name="DTSZ_FK" Association="Self.DTSZ_FK">
+            <End Role="SZAK" EntitySet="SZAK" />
+            <End Role="DIAK_TANUL" EntitySet="DIAK_TANUL" />
+          </AssociationSet>
+          <AssociationSet Name="KV_K_FK" Association="Self.KV_K_FK">
+            <End Role="KERDES" EntitySet="KERDES" />
+            <End Role="KERDES_VALASZOK" EntitySet="KERDES_VALASZOK" />
+          </AssociationSet>
+          <AssociationSet Name="KV_V_FK" Association="Self.KV_V_FK">
+            <End Role="VALASZOK" EntitySet="VALASZOK" />
+            <End Role="KERDES_VALASZOK" EntitySet="KERDES_VALASZOK" />
+          </AssociationSet>
+          <AssociationSet Name="SZTSZ_FK" Association="Self.SZTSZ_FK">
+            <End Role="SZAK" EntitySet="SZAK" />
+            <End Role="SZAK_TANTARGYAK" EntitySet="SZAK_TANTARGYAK" />
+          </AssociationSet>
+          <AssociationSet Name="SZTT_FK" Association="Self.SZTT_FK">
+            <End Role="TANTARGY" EntitySet="TANTARGY" />
+            <End Role="SZAK_TANTARGYAK" EntitySet="SZAK_TANTARGYAK" />
+          </AssociationSet>
+          <AssociationSet Name="TA_TSZ_FK" Association="Self.TA_TSZ_FK">
+            <End Role="TANSZEK" EntitySet="TANSZEK" />
+            <End Role="TANAR_ADMIN" EntitySet="TANAR_ADMIN" />
+          </AssociationSet>
+          <AssociationSet Name="TAJ_FK" Association="Self.TAJ_FK">
+            <End Role="JOG" EntitySet="JOG" />
+            <End Role="TANAR_ADMIN" EntitySet="TANAR_ADMIN" />
+          </AssociationSet>
+          <AssociationSet Name="TANSZEK_FK" Association="Self.TANSZEK_FK">
+            <End Role="TANSZEK" EntitySet="TANSZEK" />
+            <End Role="SZAK" EntitySet="SZAK" />
+          </AssociationSet>
+          <AssociationSet Name="TT_K_ID" Association="Self.TT_K_ID">
+            <End Role="KERDES" EntitySet="KERDES" />
+            <End Role="TANAR_TANTARGY" EntitySet="TANAR_TANTARGY" />
+          </AssociationSet>
+          <AssociationSet Name="TT_T_FK" Association="Self.TT_T_FK">
+            <End Role="TANTARGY" EntitySet="TANTARGY" />
+            <End Role="TANAR_TANTARGY" EntitySet="TANAR_TANTARGY" />
+          </AssociationSet>
+          <AssociationSet Name="TT_TA_FK" Association="Self.TT_TA_FK">
+            <End Role="TANAR_ADMIN" EntitySet="TANAR_ADMIN" />
+            <End Role="TANAR_TANTARGY" EntitySet="TANAR_TANTARGY" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="DIAK">
+          <Key>
+            <PropertyRef Name="D_ID" />
+          </Key>
+          <Property Name="D_ID" Type="String" MaxLength="6" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="D_EVFOLYAM" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="TANTARGY" Relationship="Self.DIAK_TANTARGY" FromRole="DIAK" ToRole="TANTARGY" />
+          <NavigationProperty Name="SZAK" Relationship="Self.DIAK_TANUL" FromRole="DIAK" ToRole="SZAK" />
+        </EntityType>
+        <EntityType Name="JOG">
+          <Key>
+            <PropertyRef Name="J_ID" />
+          </Key>
+          <Property Name="J_ID" Type="Byte" Nullable="false" />
+          <Property Name="J_NEV" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="TANAR_ADMIN" Relationship="Self.TAJ_FK" FromRole="JOG" ToRole="TANAR_ADMIN" />
+        </EntityType>
+        <EntityType Name="KERDES">
+          <Key>
+            <PropertyRef Name="K_ID" />
+          </Key>
+          <Property Name="K_ID" Type="Int32" Nullable="false" />
+          <Property Name="KERDES1" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="TANAR_TANTARGY" Relationship="Self.TT_K_ID" FromRole="KERDES" ToRole="TANAR_TANTARGY" />
+          <NavigationProperty Name="VALASZOK" Relationship="Self.KERDES_VALASZOK" FromRole="KERDES" ToRole="VALASZOK" />
+        </EntityType>
+        <EntityType Name="SZAK">
+          <Key>
+            <PropertyRef Name="SZAK_ID" />
+          </Key>
+          <Property Name="SZAK_ID" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="SZAKNEV" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="TSZ_ID" Type="Byte" />
+          <NavigationProperty Name="SZAK_TANTARGYAK" Relationship="Self.SZTSZ_FK" FromRole="SZAK" ToRole="SZAK_TANTARGYAK" />
+          <NavigationProperty Name="TANSZEK" Relationship="Self.TANSZEK_FK" FromRole="SZAK" ToRole="TANSZEK" />
+          <NavigationProperty Name="DIAK" Relationship="Self.DIAK_TANUL" FromRole="SZAK" ToRole="DIAK" />
+        </EntityType>
+        <EntityType Name="SZAK_TANTARGYAK">
+          <Key>
+            <PropertyRef Name="SZ_ID" />
+            <PropertyRef Name="T_ID" />
+          </Key>
+          <Property Name="SZ_ID" Type="String" MaxLength="6" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="T_ID" Type="Int16" Nullable="false" />
+          <Property Name="EVFOLYAM" Type="Boolean" />
+          <NavigationProperty Name="SZAK" Relationship="Self.SZTSZ_FK" FromRole="SZAK_TANTARGYAK" ToRole="SZAK" />
+          <NavigationProperty Name="TANTARGY" Relationship="Self.SZTT_FK" FromRole="SZAK_TANTARGYAK" ToRole="TANTARGY" />
+        </EntityType>
+        <EntityType Name="TANAR_ADMIN">
+          <Key>
+            <PropertyRef Name="TA_ID" />
+          </Key>
+          <Property Name="TA_ID" Type="Int16" Nullable="false" />
+          <Property Name="TA_NEV" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
+          <Property Name="TSZ_ID" Type="Byte" />
+          <Property Name="J_ID" Type="Byte" />
+          <NavigationProperty Name="JOG" Relationship="Self.TAJ_FK" FromRole="TANAR_ADMIN" ToRole="JOG" />
+          <NavigationProperty Name="TANSZEK" Relationship="Self.TA_TSZ_FK" FromRole="TANAR_ADMIN" ToRole="TANSZEK" />
+          <NavigationProperty Name="TANAR_TANTARGY" Relationship="Self.TT_TA_FK" FromRole="TANAR_ADMIN" ToRole="TANAR_TANTARGY" />
+        </EntityType>
+        <EntityType Name="TANAR_TANTARGY">
+          <Key>
+            <PropertyRef Name="TA_ID" />
+            <PropertyRef Name="T_ID" />
+            <PropertyRef Name="K_ID" />
+          </Key>
+          <Property Name="TA_ID" Type="Int16" Nullable="false" />
+          <Property Name="T_ID" Type="Int16" Nullable="false" />
+          <Property Name="K_ID" Type="Int32" Nullable="false" />
+          <Property Name="OSSZEG" Type="Int32" />
+          <Property Name="VALASZOK_SZAMA" Type="Int32" />
+          <NavigationProperty Name="KERDES" Relationship="Self.TT_K_ID" FromRole="TANAR_TANTARGY" ToRole="KERDES" />
+          <NavigationProperty Name="TANAR_ADMIN" Relationship="Self.TT_TA_FK" FromRole="TANAR_TANTARGY" ToRole="TANAR_ADMIN" />
+          <NavigationProperty Name="TANTARGY" Relationship="Self.TT_T_FK" FromRole="TANAR_TANTARGY" ToRole="TANTARGY" />
+        </EntityType>
+        <EntityType Name="TANSZEK">
+          <Key>
+            <PropertyRef Name="TSZ_ID" />
+          </Key>
+          <Property Name="TSZ_ID" Type="Byte" Nullable="false" />
+          <Property Name="TSZ_NEV" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="SZAK" Relationship="Self.TANSZEK_FK" FromRole="TANSZEK" ToRole="SZAK" />
+          <NavigationProperty Name="TANAR_ADMIN" Relationship="Self.TA_TSZ_FK" FromRole="TANSZEK" ToRole="TANAR_ADMIN" />
+        </EntityType>
+        <EntityType Name="TANTARGY">
+          <Key>
+            <PropertyRef Name="T_ID" />
+          </Key>
+          <Property Name="T_ID" Type="Int16" Nullable="false" />
+          <Property Name="T_NEV" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="SZAK_TANTARGYAK" Relationship="Self.SZTT_FK" FromRole="TANTARGY" ToRole="SZAK_TANTARGYAK" />
+          <NavigationProperty Name="TANAR_TANTARGY" Relationship="Self.TT_T_FK" FromRole="TANTARGY" ToRole="TANAR_TANTARGY" />
+          <NavigationProperty Name="DIAK" Relationship="Self.DIAK_TANTARGY" FromRole="TANTARGY" ToRole="DIAK" />
+        </EntityType>
+        <EntityType Name="VALASZOK">
+          <Key>
+            <PropertyRef Name="V_ID" />
+          </Key>
+          <Property Name="V_ID" Type="Byte" Nullable="false" />
+          <Property Name="VALASZ" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="ERTEK" Type="Byte" />
+          <NavigationProperty Name="KERDES" Relationship="Self.KERDES_VALASZOK" FromRole="VALASZOK" ToRole="KERDES" />
+        </EntityType>
+        <Association Name="TAJ_FK">
+          <End Role="JOG" Type="Self.JOG" Multiplicity="0..1" />
+          <End Role="TANAR_ADMIN" Type="Self.TANAR_ADMIN" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="JOG">
+              <PropertyRef Name="J_ID" />
+            </Principal>
+            <Dependent Role="TANAR_ADMIN">
+              <PropertyRef Name="J_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="TT_K_ID">
+          <End Role="KERDES" Type="Self.KERDES" Multiplicity="1" />
+          <End Role="TANAR_TANTARGY" Type="Self.TANAR_TANTARGY" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="KERDES">
+              <PropertyRef Name="K_ID" />
+            </Principal>
+            <Dependent Role="TANAR_TANTARGY">
+              <PropertyRef Name="K_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="SZTSZ_FK">
+          <End Role="SZAK" Type="Self.SZAK" Multiplicity="1" />
+          <End Role="SZAK_TANTARGYAK" Type="Self.SZAK_TANTARGYAK" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SZAK">
+              <PropertyRef Name="SZAK_ID" />
+            </Principal>
+            <Dependent Role="SZAK_TANTARGYAK">
+              <PropertyRef Name="SZ_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="TANSZEK_FK">
+          <End Role="TANSZEK" Type="Self.TANSZEK" Multiplicity="0..1" />
+          <End Role="SZAK" Type="Self.SZAK" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TANSZEK">
+              <PropertyRef Name="TSZ_ID" />
+            </Principal>
+            <Dependent Role="SZAK">
+              <PropertyRef Name="TSZ_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="SZTT_FK">
+          <End Role="TANTARGY" Type="Self.TANTARGY" Multiplicity="1" />
+          <End Role="SZAK_TANTARGYAK" Type="Self.SZAK_TANTARGYAK" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TANTARGY">
+              <PropertyRef Name="T_ID" />
+            </Principal>
+            <Dependent Role="SZAK_TANTARGYAK">
+              <PropertyRef Name="T_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="TA_TSZ_FK">
+          <End Role="TANSZEK" Type="Self.TANSZEK" Multiplicity="0..1" />
+          <End Role="TANAR_ADMIN" Type="Self.TANAR_ADMIN" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TANSZEK">
+              <PropertyRef Name="TSZ_ID" />
+            </Principal>
+            <Dependent Role="TANAR_ADMIN">
+              <PropertyRef Name="TSZ_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="TT_TA_FK">
+          <End Role="TANAR_ADMIN" Type="Self.TANAR_ADMIN" Multiplicity="1" />
+          <End Role="TANAR_TANTARGY" Type="Self.TANAR_TANTARGY" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TANAR_ADMIN">
+              <PropertyRef Name="TA_ID" />
+            </Principal>
+            <Dependent Role="TANAR_TANTARGY">
+              <PropertyRef Name="TA_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="TT_T_FK">
+          <End Role="TANTARGY" Type="Self.TANTARGY" Multiplicity="1" />
+          <End Role="TANAR_TANTARGY" Type="Self.TANAR_TANTARGY" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TANTARGY">
+              <PropertyRef Name="T_ID" />
+            </Principal>
+            <Dependent Role="TANAR_TANTARGY">
+              <PropertyRef Name="T_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="DIAK_TANTARGY">
+          <End Role="DIAK" Type="Self.DIAK" Multiplicity="*" />
+          <End Role="TANTARGY" Type="Self.TANTARGY" Multiplicity="*" />
+        </Association>
+        <Association Name="DIAK_TANUL">
+          <End Role="DIAK" Type="Self.DIAK" Multiplicity="*" />
+          <End Role="SZAK" Type="Self.SZAK" Multiplicity="*" />
+        </Association>
+        <Association Name="KERDES_VALASZOK">
+          <End Role="KERDES" Type="Self.KERDES" Multiplicity="*" />
+          <End Role="VALASZOK" Type="Self.VALASZOK" Multiplicity="*" />
+        </Association>
+        <EntityContainer Name="Entities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="DIAK" EntityType="Self.DIAK" />
+          <EntitySet Name="JOG" EntityType="Self.JOG" />
+          <EntitySet Name="KERDES" EntityType="Self.KERDES" />
+          <EntitySet Name="SZAK" EntityType="Self.SZAK" />
+          <EntitySet Name="SZAK_TANTARGYAK" EntityType="Self.SZAK_TANTARGYAK" />
+          <EntitySet Name="TANAR_ADMIN" EntityType="Self.TANAR_ADMIN" />
+          <EntitySet Name="TANAR_TANTARGY" EntityType="Self.TANAR_TANTARGY" />
+          <EntitySet Name="TANSZEK" EntityType="Self.TANSZEK" />
+          <EntitySet Name="TANTARGY" EntityType="Self.TANTARGY" />
+          <EntitySet Name="VALASZOK" EntityType="Self.VALASZOK" />
+          <AssociationSet Name="TAJ_FK" Association="Self.TAJ_FK">
+            <End Role="JOG" EntitySet="JOG" />
+            <End Role="TANAR_ADMIN" EntitySet="TANAR_ADMIN" />
+          </AssociationSet>
+          <AssociationSet Name="TT_K_ID" Association="Self.TT_K_ID">
+            <End Role="KERDES" EntitySet="KERDES" />
+            <End Role="TANAR_TANTARGY" EntitySet="TANAR_TANTARGY" />
+          </AssociationSet>
+          <AssociationSet Name="SZTSZ_FK" Association="Self.SZTSZ_FK">
+            <End Role="SZAK" EntitySet="SZAK" />
+            <End Role="SZAK_TANTARGYAK" EntitySet="SZAK_TANTARGYAK" />
+          </AssociationSet>
+          <AssociationSet Name="TANSZEK_FK" Association="Self.TANSZEK_FK">
+            <End Role="TANSZEK" EntitySet="TANSZEK" />
+            <End Role="SZAK" EntitySet="SZAK" />
+          </AssociationSet>
+          <AssociationSet Name="SZTT_FK" Association="Self.SZTT_FK">
+            <End Role="TANTARGY" EntitySet="TANTARGY" />
+            <End Role="SZAK_TANTARGYAK" EntitySet="SZAK_TANTARGYAK" />
+          </AssociationSet>
+          <AssociationSet Name="TA_TSZ_FK" Association="Self.TA_TSZ_FK">
+            <End Role="TANSZEK" EntitySet="TANSZEK" />
+            <End Role="TANAR_ADMIN" EntitySet="TANAR_ADMIN" />
+          </AssociationSet>
+          <AssociationSet Name="TT_TA_FK" Association="Self.TT_TA_FK">
+            <End Role="TANAR_ADMIN" EntitySet="TANAR_ADMIN" />
+            <End Role="TANAR_TANTARGY" EntitySet="TANAR_TANTARGY" />
+          </AssociationSet>
+          <AssociationSet Name="TT_T_FK" Association="Self.TT_T_FK">
+            <End Role="TANTARGY" EntitySet="TANTARGY" />
+            <End Role="TANAR_TANTARGY" EntitySet="TANAR_TANTARGY" />
+          </AssociationSet>
+          <AssociationSet Name="DIAK_TANTARGY" Association="Self.DIAK_TANTARGY">
+            <End Role="DIAK" EntitySet="DIAK" />
+            <End Role="TANTARGY" EntitySet="TANTARGY" />
+          </AssociationSet>
+          <AssociationSet Name="DIAK_TANUL" Association="Self.DIAK_TANUL">
+            <End Role="DIAK" EntitySet="DIAK" />
+            <End Role="SZAK" EntitySet="SZAK" />
+          </AssociationSet>
+          <AssociationSet Name="KERDES_VALASZOK" Association="Self.KERDES_VALASZOK">
+            <End Role="KERDES" EntitySet="KERDES" />
+            <End Role="VALASZOK" EntitySet="VALASZOK" />
+          </AssociationSet>
+          <FunctionImport Name="GETSZAKTANTARGYAK_KURZOR">
+            <Parameter Name="SZAK_ID" Mode="In" Type="String" />
+          </FunctionImport>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="ModelStoreContainer" CdmEntityContainer="Entities">
+          <EntitySetMapping Name="DIAK">
+            <EntityTypeMapping TypeName="Model.DIAK">
+              <MappingFragment StoreEntitySet="DIAK">
+                <ScalarProperty Name="D_ID" ColumnName="D_ID" />
+                <ScalarProperty Name="D_EVFOLYAM" ColumnName="D_EVFOLYAM" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="JOG">
+            <EntityTypeMapping TypeName="Model.JOG">
+              <MappingFragment StoreEntitySet="JOG">
+                <ScalarProperty Name="J_ID" ColumnName="J_ID" />
+                <ScalarProperty Name="J_NEV" ColumnName="J_NEV" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="KERDES">
+            <EntityTypeMapping TypeName="Model.KERDES">
+              <MappingFragment StoreEntitySet="KERDES">
+                <ScalarProperty Name="K_ID" ColumnName="K_ID" />
+                <ScalarProperty Name="KERDES1" ColumnName="KERDES" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SZAK">
+            <EntityTypeMapping TypeName="Model.SZAK">
+              <MappingFragment StoreEntitySet="SZAK">
+                <ScalarProperty Name="SZAK_ID" ColumnName="SZAK_ID" />
+                <ScalarProperty Name="SZAKNEV" ColumnName="SZAKNEV" />
+                <ScalarProperty Name="TSZ_ID" ColumnName="TSZ_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SZAK_TANTARGYAK">
+            <EntityTypeMapping TypeName="Model.SZAK_TANTARGYAK">
+              <MappingFragment StoreEntitySet="SZAK_TANTARGYAK">
+                <ScalarProperty Name="SZ_ID" ColumnName="SZ_ID" />
+                <ScalarProperty Name="T_ID" ColumnName="T_ID" />
+                <ScalarProperty Name="EVFOLYAM" ColumnName="EVFOLYAM" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TANAR_ADMIN">
+            <EntityTypeMapping TypeName="Model.TANAR_ADMIN">
+              <MappingFragment StoreEntitySet="TANAR_ADMIN">
+                <ScalarProperty Name="TA_ID" ColumnName="TA_ID" />
+                <ScalarProperty Name="TA_NEV" ColumnName="TA_NEV" />
+                <ScalarProperty Name="TSZ_ID" ColumnName="TSZ_ID" />
+                <ScalarProperty Name="J_ID" ColumnName="J_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TANAR_TANTARGY">
+            <EntityTypeMapping TypeName="Model.TANAR_TANTARGY">
+              <MappingFragment StoreEntitySet="TANAR_TANTARGY">
+                <ScalarProperty Name="TA_ID" ColumnName="TA_ID" />
+                <ScalarProperty Name="T_ID" ColumnName="T_ID" />
+                <ScalarProperty Name="K_ID" ColumnName="K_ID" />
+                <ScalarProperty Name="OSSZEG" ColumnName="OSSZEG" />
+                <ScalarProperty Name="VALASZOK_SZAMA" ColumnName="VALASZOK_SZAMA" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TANSZEK">
+            <EntityTypeMapping TypeName="Model.TANSZEK">
+              <MappingFragment StoreEntitySet="TANSZEK">
+                <ScalarProperty Name="TSZ_ID" ColumnName="TSZ_ID" />
+                <ScalarProperty Name="TSZ_NEV" ColumnName="TSZ_NEV" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TANTARGY">
+            <EntityTypeMapping TypeName="Model.TANTARGY">
+              <MappingFragment StoreEntitySet="TANTARGY">
+                <ScalarProperty Name="T_ID" ColumnName="T_ID" />
+                <ScalarProperty Name="T_NEV" ColumnName="T_NEV" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="VALASZOK">
+            <EntityTypeMapping TypeName="Model.VALASZOK">
+              <MappingFragment StoreEntitySet="VALASZOK">
+                <ScalarProperty Name="V_ID" ColumnName="V_ID" />
+                <ScalarProperty Name="VALASZ" ColumnName="VALASZ" />
+                <ScalarProperty Name="ERTEK" ColumnName="ERTEK" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="DIAK_TANTARGY" TypeName="Model.DIAK_TANTARGY" StoreEntitySet="DIAK_TANTARGY">
+            <EndProperty Name="DIAK">
+              <ScalarProperty Name="D_ID" ColumnName="D_ID" />
+            </EndProperty>
+            <EndProperty Name="TANTARGY">
+              <ScalarProperty Name="T_ID" ColumnName="T_ID" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <AssociationSetMapping Name="DIAK_TANUL" TypeName="Model.DIAK_TANUL" StoreEntitySet="DIAK_TANUL">
+            <EndProperty Name="DIAK">
+              <ScalarProperty Name="D_ID" ColumnName="D_ID" />
+            </EndProperty>
+            <EndProperty Name="SZAK">
+              <ScalarProperty Name="SZAK_ID" ColumnName="SZ_ID" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <AssociationSetMapping Name="KERDES_VALASZOK" TypeName="Model.KERDES_VALASZOK" StoreEntitySet="KERDES_VALASZOK">
+            <EndProperty Name="KERDES">
+              <ScalarProperty Name="K_ID" ColumnName="K_ID" />
+            </EndProperty>
+            <EndProperty Name="VALASZOK">
+              <ScalarProperty Name="V_ID" ColumnName="V_ID" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <FunctionImportMapping FunctionImportName="GETSZAKTANTARGYAK_KURZOR" FunctionName="Model.Store.GETSZAKTANTARGYAK_KURZOR" />
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
